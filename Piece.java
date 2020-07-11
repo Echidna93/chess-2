@@ -13,6 +13,7 @@ public abstract class Piece extends JButton implements MouseInputListener {
     // numMoves field to hold the number of times a piece has moved
     public int numMoves, rank;
     public String color;
+    // isSelected decides whether or not user has selected given piece
     public boolean isSelected = false;
     // image will hold png of the piece image
     public ImageIcon image;
@@ -89,6 +90,20 @@ public abstract class Piece extends JButton implements MouseInputListener {
     boolean getIsSelected(){
         return isSelected;
     }
+    /*
+    * returns the number of times a piece has moved
+    */
+    int getNumMoves(){
+        return numMoves;
+    }
+    
+    /*
+    * increments the number of times that a piece has moved
+    */
+    void incNumMoves(){
+        numMoves+=1;
+    }
+
     /*
     * returns imageicon representation of the piece
     */

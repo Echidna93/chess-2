@@ -82,6 +82,7 @@ public class Game{
                                     startSquare.revalidate();
                                     square.add(piece);
                                     square.setIcon(piece.getImage());
+                                    piece.incNumMoves();
                                 }else{
                                     piece.setIsSelected(false);
                                     startSquare.setIsSelected(false);
