@@ -7,7 +7,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 
-public class Piece extends JButton implements MouseInputListener {
+public abstract class Piece extends JButton implements MouseInputListener {
 
     public int[] coord = new int[2];
     // numMoves field to hold the number of times a piece has moved
@@ -17,11 +17,12 @@ public class Piece extends JButton implements MouseInputListener {
     // image will hold png of the piece image
     public ImageIcon image;
 
-    public Piece(int[] vector, String color, ImageIcon image){
+    public Piece(int[] vector, String color, ImageIcon image, int rank){
         this.coord = vector;
         this.numMoves = 0;
         this.color = color;
         this.image = image;
+        this.rank = rank;
         // TODO: read up on ranking system in chess, implement it
         addMouseListener(new MouseInputListener(){
 

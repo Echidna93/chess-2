@@ -1,7 +1,9 @@
 import javax.swing.ImageIcon;
 public class King extends Piece{
+    // king rank very high number
+    static int KING_RANK = 1000000000;
     public King(int[] vector, String color, ImageIcon image){
-        super(vector, color, image);
+        super(vector, color, image, KING_RANK);
     }
     @Override
     boolean isLegalMove(int[] startPosition, int[] endPosition) {
