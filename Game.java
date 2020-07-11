@@ -1,18 +1,10 @@
 import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputListener;
-import javax.xml.ws.Action;
-
-import javafx.event.ActionEvent;
-
-
 public class Game{
 
     static ArrayList<Square> initBoard() {
@@ -44,7 +36,12 @@ public class Game{
         // squares holds list of squares
         ArrayList<Square> squares = initBoard();
         ArrayList<Piece> pieces = new ArrayList<Piece>();
+        
         JFrame frame = new JFrame();
+
+        MenuBar menuBar = new MenuBar();
+        frame.setJMenuBar(menuBar);
+        
         Board board = new Board();
         frame.add(board);
         String path = Paths.get(".").normalize().toAbsolutePath().toString() + "\\imgs\\";

@@ -7,7 +7,7 @@ import javax.swing.event.MouseInputListener;
 
 // class board is used to simulate chess board
 // class board will be composed of squares
-public class Board extends JPanel implements MouseInputListener{
+public class Board extends JPanel{
     public static int BOARD_HEIGHT = 8;
     public static int BOARD_WIDTH = 8;
     
@@ -24,8 +24,5 @@ public class Board extends JPanel implements MouseInputListener{
     int getBoardHeight(){
         return BOARD_HEIGHT;
     }
-
-
-
 }
     
