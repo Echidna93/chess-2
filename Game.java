@@ -24,12 +24,88 @@ public class Game{
 
                 // add latest square to squares list
                 squares.add(square);
-
                 k++;
             }
         }
         return squares;
     }
+    /**
+     * Matches a square to exisiting list of squares by ID
+     * 
+     * @param squares (required) squares ArrayList of Square objects
+     * @param id (required) id of square to match
+     * 
+     * <p> note that returns default square of id null if square id happens to not be found in the list 
+     * 
+     * @author Alexander Jack
+     * 
+     */
+
+    Square getSquareById(ArrayList<Square> squares, String id){
+        for(Square square: squares){
+            if(id.equals(square.getId()))
+                return square;
+        }
+        return new Square();
+    }
+
+/**
+ * {square: "a1", color: "white", piece_type: "castle"}, 
+        {square: "b1", color: "white", piece_type: "knight"}, 
+        {square: "c1", color: "white", piece_type: "bishop"},
+        {square: "d1", color: "white", piece_type: "queen"},
+        {square: "e1", color: "white", piece_type: "king"},
+        {square: "f1", color: "white", piece_type: "bishop"},
+        {square: "g1", color: "white", piece_type: "knight"},
+        {square: "h1", color: "white", piece_type: "castle"},
+        {square: "a2", color: "white", piece_type: "pawn"},
+        {square: "b2", color: "white", piece_type: "pawn"},
+        {square: "c2", color: "white", piece_type: "pawn"},
+        {square: "d2", color: "white", piece_type: "pawn"},
+        {square: "e2", color: "white", piece_type: "pawn"},
+        {square: "f2", color: "white", piece_type: "pawn"},
+        {square: "g2", color: "white", piece_type: "pawn"},
+        {square: "h2", color: "white", piece_type: "pawn"},
+        {square: "a7", color: "black", piece_type: "pawn"},
+        {square: "b7", color: "black", piece_type: "pawn"},
+        {square: "c7", color: "black", piece_type: "pawn"},
+        {square: "d7", color: "black", piece_type: "pawn"},
+        {square: "e7", color: "black", piece_type: "pawn"},
+        {square: "f7", color: "black", piece_type: "pawn"},
+        {square: "g7", color: "black", piece_type: "pawn"},
+        {square: "h7", color: "black", piece_type: "pawn"},
+        {square: "a8", color: "black", piece_type: "castle"},
+        {square: "b8", color: "black", piece_type: "knight"},
+        {square: "c8", color: "black", piece_type: "bishop"},
+        {square: "d8", color: "black", piece_type: "queen"},
+        {square: "e8", color: "black", piece_type: "king"},
+        {square: "f8", color: "black", piece_type: "bishop"},
+        {square: "g8", color: "black", piece_type: "knight"},
+        {square: "h8", color: "black", piece_type: "castle"},
+ * @param args
+*/
+
+void setPieces(){
+
+}
+/**
+ * Initializes an arraylist of type Piece, correlating to each piece on the board
+ * 
+ * <p> take in path of directory img, which houses the piece pngs
+ * 
+ * @return ArrayList<Piece>
+ */
+
+ArrayList<Piece> getPieces(Path path){
+    // initialize new array of strings of size 32; one per chess piece
+    String[] pieceName = new String[]{"blackPawn", "blackCastle","blackKnight",
+                                     "blackBishop","blackQueen", "blackKing",
+                                     "whitePawn", "whiteCastle", "whiteKnight",
+                                     "whiteBishop", "WhiteQueen", "whiteKing"};
+    return pieces;
+}
+
+
     public static void main(String[] args) {
 
         // grab arraylist containing all of the squares on the board

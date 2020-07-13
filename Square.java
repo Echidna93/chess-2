@@ -11,6 +11,9 @@ public class Square extends JButton implements ActionListener{
     protected String id;
     protected boolean isOccupied = false;
     boolean isSelected = false;
+    Square(){
+        this.id = null;
+    }
     Square(int[] vector, String color, String id){
         this.coord = vector;
         this.color = color;
@@ -49,6 +52,17 @@ public class Square extends JButton implements ActionListener{
 
     boolean getIsSelected(){
         return this.isSelected;
+    }
+
+    /**
+     * Getter method that returns the unique id of square, corresponds to id of chessboard square
+     * 
+     * @author Alexander Jack
+     * 
+     * @return id
+     */
+    String getId(){
+        return this.id;
     }
 
     // onclick button displays its id
