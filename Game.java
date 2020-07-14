@@ -1,3 +1,10 @@
+/**
+ * <p>Represents the mechanics of the game
+ *  
+ * @author Alexander Jack
+ */
+
+
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.nio.file.Path;

@@ -1,3 +1,11 @@
+/**
+ * <p> Piece represents an abstract piece which all other pieces inherit from
+ * 
+ * @uathor Alexander Jack 
+ * 
+ */
+
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 

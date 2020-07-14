@@ -1,3 +1,9 @@
+/**
+ * <p> Board represents the container that holds the squares.
+ * 
+ * @author Alexander Jack
+ */
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 

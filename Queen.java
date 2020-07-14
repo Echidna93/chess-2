@@ -1,3 +1,9 @@
+/**
+ * <p> Queen represents the piece Queen on a real chess board.
+ * 
+ * @author Alexander Jack
+ */
+
 import javax.swing.ImageIcon;
 
 public class Queen extends Piece {
