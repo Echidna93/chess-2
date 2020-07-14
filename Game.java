@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -29,6 +30,7 @@ public class Game{
         }
         return squares;
     }
+
     /**
      * Matches a square to exisiting list of squares by ID
      * 
@@ -41,7 +43,7 @@ public class Game{
      * 
      */
 
-    Square getSquareById(ArrayList<Square> squares, String id){
+    static Square getSquareById(ArrayList<Square> squares, String id){
         for(Square square: squares){
             if(id.equals(square.getId()))
                 return square;
@@ -50,91 +52,70 @@ public class Game{
     }
 
 /**
- * {square: "a1", color: "white", piece_type: "castle"}, 
-        {square: "b1", color: "white", piece_type: "knight"}, 
-        {square: "c1", color: "white", piece_type: "bishop"},
-        {square: "d1", color: "white", piece_type: "queen"},
-        {square: "e1", color: "white", piece_type: "king"},
-        {square: "f1", color: "white", piece_type: "bishop"},
-        {square: "g1", color: "white", piece_type: "knight"},
-        {square: "h1", color: "white", piece_type: "castle"},
-        {square: "a2", color: "white", piece_type: "pawn"},
-        {square: "b2", color: "white", piece_type: "pawn"},
-        {square: "c2", color: "white", piece_type: "pawn"},
-        {square: "d2", color: "white", piece_type: "pawn"},
-        {square: "e2", color: "white", piece_type: "pawn"},
-        {square: "f2", color: "white", piece_type: "pawn"},
-        {square: "g2", color: "white", piece_type: "pawn"},
-        {square: "h2", color: "white", piece_type: "pawn"},
-        {square: "a7", color: "black", piece_type: "pawn"},
-        {square: "b7", color: "black", piece_type: "pawn"},
-        {square: "c7", color: "black", piece_type: "pawn"},
-        {square: "d7", color: "black", piece_type: "pawn"},
-        {square: "e7", color: "black", piece_type: "pawn"},
-        {square: "f7", color: "black", piece_type: "pawn"},
-        {square: "g7", color: "black", piece_type: "pawn"},
-        {square: "h7", color: "black", piece_type: "pawn"},
-        {square: "a8", color: "black", piece_type: "castle"},
-        {square: "b8", color: "black", piece_type: "knight"},
-        {square: "c8", color: "black", piece_type: "bishop"},
-        {square: "d8", color: "black", piece_type: "queen"},
-        {square: "e8", color: "black", piece_type: "king"},
-        {square: "f8", color: "black", piece_type: "bishop"},
-        {square: "g8", color: "black", piece_type: "knight"},
-        {square: "h8", color: "black", piece_type: "castle"},
+ * 
  * @param args
 */
 
-void setPieces(){
-
+static void setPieces(ArrayList<Square> squares, String path) {
+    String[] initialPositions = new String[] { "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "a7", "b7", "c7", "d7",
+            "e7", "f7", "g7", "h7", "a1", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "a1", "b1", "c1", "d1", "e1", "f1",
+            "g1", "h1" };
 }
+
 /**
- * Initializes an arraylist of type Piece, correlating to each piece on the board
+ * Initializes an arraylist of type Piece, correlating to each piece on the
+ * board
  * 
- * <p> take in path of directory img, which houses the piece pngs
+ * <p>
+ * take in path of directory img, which houses the piece pngs
  * 
  * @return ArrayList<Piece>
  */
 
-ArrayList<Piece> getPieces(Path path){
+ArrayList<Piece> getPieces(Path path) {
     // initialize new array of strings of size 32; one per chess piece
-    String[] pieceName = new String[]{"blackPawn", "blackCastle","blackKnight",
-                                     "blackBishop","blackQueen", "blackKing",
-                                     "whitePawn", "whiteCastle", "whiteKnight",
-                                     "whiteBishop", "WhiteQueen", "whiteKing"};
+    String[] pieceName = new String[] { "blackPawn", "blackCastle", "blackKnight", "blackBishop", "blackQueen",
+            "blackKing", "whitePawn", "whiteCastle", "whiteKnight", "whiteBishop", "WhiteQueen", "whiteKing" };
     return pieces;
 }
 
+public static void main(String[] args) {
 
-    public static void main(String[] args) {
+    // grab arraylist containing all of the squares on the board
+    // squares holds list of squares
+    ArrayList<Square> squares = initBoard();
+    ArrayList<Piece> pieces = new ArrayList<Piece>();
 
-        // grab arraylist containing all of the squares on the board
-        // squares holds list of squares
-        ArrayList<Square> squares = initBoard();
-        ArrayList<Piece> pieces = new ArrayList<Piece>();
-        
-        JFrame frame = new JFrame();
+    JFrame frame = new JFrame();
 
-        MenuBar menuBar = new MenuBar();
-        frame.setJMenuBar(menuBar);
+    MenuBar menuBar = new MenuBar();
+    frame.setJMenuBar(menuBar);
+
+    Board board = new Board();
+    frame.add(board);
+    String path = Paths.get(".").normalize().toAbsolutePath().toString() + "\\imgs\\";
+    System.out.println(path + "blackKing.png");
+    System.out.println(squares.get(0).id);
+
+    
+    Square a1 = new Square();
+    a1 = getSquareById(squares, "a1");
+    Queen blackQueen = new Queen(a1.getCoord(), "black", new ImageIcon(path + "\\blackQueen.png"));
+    a1.setIcon(blackQueen.getImage());
+    a1.add(blackQueen);
+
+    King king = new King(squares.get(1).getCoord(), "black", new ImageIcon(path + "\\blackKing.png"));
+    pieces.add(king);
+    System.out.println(king.getImage());
+    squares.get(1).setIcon(king.getImage());
+    squares.get(1).add(king);
         
-        Board board = new Board();
-        frame.add(board);
-        String path = Paths.get(".").normalize().toAbsolutePath().toString() + "\\imgs\\";
-        System.out.println(path + "blackKing.png");
-        System.out.println(squares.get(0).id);
-        King king = new King(squares.get(1).getCoord(), "black", new ImageIcon(path + "\\blackKing.png"));
-        pieces.add(king);
-        System.out.println(king.getImage());
-        squares.get(1).setIcon(king.getImage());
-        squares.get(1).add(king);
-        
-        //ArrayList<Square> squares = new ArrayList<Square>();
-        boolean isStillPlaying = true;
-        // initialize board frame
-        frame.setVisible(true);
-        frame.setTitle("Chess");
-        frame.setSize(450, 450);
+    //ArrayList<Square> squares = new ArrayList<Square>();
+    boolean isStillPlaying = true;
+    // initialize board frame
+    frame.setVisible(true);
+    frame.setTitle("Chess");
+    frame.setSize(450, 450);
         
         for(Square square : squares){
             board.add(square);
