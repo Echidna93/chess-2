@@ -1,6 +1,8 @@
-/*
-* MenuBar class holds the menu bar holds the menu bar for settings &c
-*/
+/**
+ * <p> MenuBar class holds the menu bar holds the top navigation bar for settings &c as needed
+ * 
+ * @author Alexander Jack
+ */
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;

@@ -1,5 +1,5 @@
 public class Player {
-    public String color;
+    public string color;
     public Player(String color){
         this.color = color;
     }

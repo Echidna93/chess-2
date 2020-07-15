@@ -19,13 +19,12 @@ public class Square extends JButton implements ActionListener{
         this.color = color;
         setColor(color);
         this.id = id;
-        // add on onclick listener to test to make sure things are named properly, might delete later
         addActionListener(this);
     }
     // setcolor called for initialization of board
     void setColor(String color){
-        if(color == "BLACK"){
-            setBackground(Color.BLACK);
+        if(color == "GREY"){
+            setBackground(Color.GRAY);
         }
         else{
             setBackground(Color.WHITE);
@@ -68,8 +67,7 @@ public class Square extends JButton implements ActionListener{
     // onclick button displays its id
     @Override
     public void actionPerformed(final ActionEvent e) {
-        setIsSelected(true);
-        System.out.println("this is the id : " + id);   
+        setIsSelected(true);   
     }
 
 }

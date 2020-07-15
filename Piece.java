@@ -32,6 +32,9 @@ public abstract class Piece extends JButton implements MouseInputListener {
         this.color = color;
         this.image = image;
         this.rank = rank;
+        setOpaque(false);
+        setContentAreaFilled(false);
+        setBorderPainted(false);
         // TODO: read up on ranking system in chess, implement it
         addMouseListener(new MouseInputListener(){
 

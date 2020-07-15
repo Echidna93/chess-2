@@ -13,7 +13,7 @@ public class Queen extends Piece {
     }
     @Override
     boolean isLegalMove(int[] startPosition, int[] endPosition) {
-        if((Math.abs(startPosition[0] - endPosition[0]) == 1) && (Math.abs(startPosition[1] - endPosition[1]) == 0) || ((Math.abs(startPosition[1] - endPosition[1]) == 1) && (Math.abs(startPosition[0] - endPosition[0]) == 0)) || ((Math.abs(startPosition[0] - endPosition[0]) == 1) && (Math.abs(startPosition[1] - endPosition[1]) == 1))){
+        if(((Math.abs(startPosition[0]-endPosition[0]) == 0) || (Math.abs(startPosition[1] - endPosition[1]) == 0)) || (Math.abs(startPosition[0] - endPosition[0]) == Math.abs(startPosition[1] - endPosition[1]))){
             return true;
         }
         return false;
