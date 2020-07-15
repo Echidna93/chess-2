@@ -24,10 +24,10 @@ public class Square extends JButton implements ActionListener{
     // setcolor called for initialization of board
     void setColor(String color){
         if(color == "GREY"){
-            setBackground(Color.GRAY);
+            setBackground(Color.darkGray);
         }
         else{
-            setBackground(Color.WHITE);
+            setBackground(Color.lightGray);
         }
     }
     // returns coordinate array

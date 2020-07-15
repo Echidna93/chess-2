@@ -143,18 +143,22 @@ public static void main(String[] args) {
     Square g8 = getSquareById(squares, "g8");
     Square h8 = getSquareById(squares, "h8");
     
-    Queen blackQueen = new Queen(a1.getCoord(), "black", new ImageIcon(path + "\\blackQueen.png"));
+    // instantiate black pieces
+    Queen blackQueen = new Queen(f7.getCoord(), "black", new ImageIcon(path + "\\blackQueen.png"));
     King blackKing = new King(squares.get(1).getCoord(), "black", new ImageIcon(path + "\\blackKing.png"));
     Pawn blackPawna7 = new Pawn(a7.getCoord(), "black", new ImageIcon(path + "\\blackPawn.png"));
     Castle blackCastlea8 = new Castle(a8.getCoord(), "black", new ImageIcon(path + "\\blackCastle.png"));
     Knight blackKnightd8 = new Knight(d8.getCoord(), "black", new ImageIcon(path + "\\blackKnight.png"));
     Bishop blackBishoph8 = new Bishop(h8.getCoord(), "black", new ImageIcon(path + "\\blackBishop.png"));
-    // add piece class to square
+
+
+    // add black piece class to square
     a8.add(blackCastlea8);    
     a7.add(blackPawna7);
     h8.add(blackBishoph8);
     d8.add(blackKnightd8);
     a1.add(blackQueen);
+    f7.add(blackPawna7);
     squares.get(1).add(blackKing);
         
     // set the images
@@ -164,7 +168,8 @@ public static void main(String[] args) {
     a7.setIcon(blackPawna7.getImage());
     a8.setIcon(blackCastlea8.getImage());
     h8.setIcon(blackBishoph8.getImage());
-    
+    a7.setIcon(blackPawna7.getImage());
+
     // add pieces to pieces array
     pieces.add(blackQueen);
     pieces.add(blackKing);
@@ -172,11 +177,43 @@ public static void main(String[] args) {
     pieces.add(blackCastlea8);
     pieces.add(blackKnightd8);
     pieces.add(blackBishoph8);
+    pieces.add(blackPawna7);
+
+    // instantiate white pieces
+    Queen whiteQueen = new Queen(d1.getCoord(), "black", new ImageIcon(path + "\\whiteQueen.png"));
+    King whiteKing = new King(e1.getCoord(), "black", new ImageIcon(path + "\\whiteKing.png"));
+    Pawn whitePawne2 = new Pawn(e2.getCoord(), "black", new ImageIcon(path + "\\whitePawn.png"));
+    Castle whiteCastlea1 = new Castle(a1.getCoord(), "black", new ImageIcon(path + "\\whiteCastle.png"));
+    Knight whiteKnightb1 = new Knight(b1.getCoord(), "black", new ImageIcon(path + "\\whiteKnight.png"));
+    Bishop whiteBishopc1 = new Bishop(c1.getCoord(), "black", new ImageIcon(path + "\\whiteBishop.png"));
+        
+    // set the images
+    e1.setIcon(whiteKing.getImage());
+    d1.setIcon(whiteQueen.getImage());
+    b1.setIcon(whiteKnightb1.getImage());
+    e2.setIcon(whitePawne2.getImage());
+    a1.setIcon(whiteCastlea1.getImage());
+    c1.setIcon(whiteBishopc1.getImage());
+    
+    // add piece class to square
+    c1.add(whiteBishopc1);    
+    a1.add(whiteCastlea1);
+    e2.add(whitePawne2);
+    b1.add(whiteKnightb1);
+    d1.add(whiteQueen);
+    e1.add(whiteKing);
+
+    // add pieces to pieces array
+    pieces.add(whiteBishopc1);
+    pieces.add(whiteCastlea1);
+    pieces.add(whiteKnightb1);
+    pieces.add(whiteQueen);
+    pieces.add(whiteKing);
+    pieces.add(whitePawne2);
 
     // for the end condition of the game
     boolean isStillPlaying = true;
     
-
     // initialize board frame
     frame.setVisible(true);
     frame.setTitle("Chess");
