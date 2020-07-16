@@ -1,3 +1,4 @@
+
 /**
  * <p>Represents the mechanics of the game
  *  
@@ -9,6 +10,8 @@ import java.awt.event.MouseEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputListener;
@@ -57,6 +60,14 @@ public class Game{
         return new Square();
     }
 
+    static boolean isAttacking(Square source, Square target){
+        if(target.isOccupied){
+            System.out.println("isAttacking");
+            return true;
+        }
+        return false;
+    }
+
 /**
  * 
  * @param args
@@ -83,6 +94,15 @@ ArrayList<Piece> getPieces(Path path) {
     String[] pieceName = new String[] { "blackPawn", "blackCastle", "blackKnight", "blackBishop", "blackQueen",
             "blackKing", "whitePawn", "whiteCastle", "whiteKnight", "whiteBishop", "WhiteQueen", "whiteKing" };
     return pieces;
+}
+
+static Piece getPieceByIcon(ArrayList<Piece> pieces, ImageIcon i){
+    for(Piece piece: pieces){
+        if(piece.getIcon() == i){
+            return piece;
+        }
+    }
+    return null;
 }
 
 public static void main(String[] args) {
@@ -153,12 +173,18 @@ public static void main(String[] args) {
 
 
     // add black piece class to square
-    a8.add(blackCastlea8);    
+    a8.add(blackCastlea8);
+    a8.setIsOccupied(true);    
     a7.add(blackPawna7);
+    a7.setIsOccupied(true);
     h8.add(blackBishoph8);
+    h8.setIsOccupied(true);
     d8.add(blackKnightd8);
+    a2.setIsOccupied(true);
     a1.add(blackQueen);
+    a1.setIsOccupied(true);
     f7.add(blackPawna7);
+    f7.setIsOccupied(true);
     squares.get(1).add(blackKing);
         
     // set the images
@@ -196,12 +222,18 @@ public static void main(String[] args) {
     c1.setIcon(whiteBishopc1.getImage());
     
     // add piece class to square
-    c1.add(whiteBishopc1);    
+    c1.add(whiteBishopc1);
+    c1.setIsOccupied(true);
     a1.add(whiteCastlea1);
+    a1.setIsOccupied(true);
     e2.add(whitePawne2);
+    e2.setIsOccupied(true);
     b1.add(whiteKnightb1);
+    b1.setIsOccupied(true);
     d1.add(whiteQueen);
+    d1.setIsOccupied(true);
     e1.add(whiteKing);
+    e1.setIsOccupied(true);
 
     // add pieces to pieces array
     pieces.add(whiteBishopc1);
@@ -235,13 +267,26 @@ public static void main(String[] args) {
                         // check if piece is selected
                         if(piece.isSelected){
                             Square startSquare = (Square) piece.getParent();
+                            // check if move is legal
                             if(piece.isLegalMove(startSquare.getCoord(), square.getCoord())){
+                                
+                                if(isAttacking(startSquare, square)){
+                                    square.remove(getPieceByIcon(pieces, (ImageIcon) square.getIcon()));
+                                }
+                                // move piece obj  
                                 startSquare.remove(piece);
-                                startSquare.setIcon(null);
-                                startSquare.revalidate();
+                                startSquare.setIsOccupied(false);
                                 square.add(piece);
-                                square.setIcon(piece.getImage());
+                                square.setIsOccupied(true);
+                                // increase number of moves
                                 piece.incNumMoves();
+                                
+                                // move ui
+                                square.add(piece);
+                                startSquare.revalidate();
+                                startSquare.setIcon(null);
+                                square.setIcon(piece.getImage());
+                                                                
                             }else{
                                 piece.setIsSelected(false);
                                 startSquare.setIsSelected(false);
