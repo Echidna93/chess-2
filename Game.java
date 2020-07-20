@@ -10,9 +10,12 @@ import java.awt.event.MouseEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputListener;
 
@@ -60,24 +63,42 @@ public class Game{
         return new Square();
     }
 
+    /**
+     * 
+     * @param source
+     * @param target
+     * @return
+     */
+
     static boolean isAttacking(Square source, Square target){
         if(target.isOccupied){
-            System.out.println("isAttacking");
             return true;
         }
         return false;
     }
 
+
 /**
  * 
  * @param args
 */
-
+/*
 static void setPieces(ArrayList<Square> squares, String path) {
-    String[] initialPositions = new String[] { "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "a7", "b7", "c7", "d7",
+    String[] initialPositions = new String[] {"a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "a7", "b7", "c7", "d7",
             "e7", "f7", "g7", "h7", "a1", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "a1", "b1", "c1", "d1", "e1", "f1",
             "g1", "h1" };
+
+    for(int i = 0; i < initialPositions.length; i ++){
+        // black pawns
+        if(initialPositions[i].contains("7")){
+            Square s = getSquareById(squares, initialPositions[i]);
+            String pieceName = "blackPawn" + initialPositions[i];
+            Square  = 
+        }
+    }
+    
 }
+*/
 
 /**
  * Initializes an arraylist of type Piece, correlating to each piece on the
@@ -96,10 +117,12 @@ ArrayList<Piece> getPieces(Path path) {
     return pieces;
 }
 
-static Piece getPieceByIcon(ArrayList<Piece> pieces, ImageIcon i){
-    for(Piece piece: pieces){
-        if(piece.getIcon() == i){
-            return piece;
+static Piece getPieceByComponentList(Square square){
+    Component[] components = square.getComponents();
+    for(Component component: components){
+        System.out.println("this is the component: " + component);
+        if(component instanceof Piece){
+            return (Piece) component;
         }
     }
     return null;
@@ -124,6 +147,7 @@ public static void main(String[] args) {
 
     // white pieces
     String path = Paths.get(".").normalize().toAbsolutePath().toString() + "\\imgs\\";
+
     Square a1 = getSquareById(squares, "a1");
     Square b1 = getSquareById(squares, "b1");
     Square c1 = getSquareById(squares, "c1");
@@ -206,12 +230,12 @@ public static void main(String[] args) {
     pieces.add(blackPawna7);
 
     // instantiate white pieces
-    Queen whiteQueen = new Queen(d1.getCoord(), "black", new ImageIcon(path + "\\whiteQueen.png"));
-    King whiteKing = new King(e1.getCoord(), "black", new ImageIcon(path + "\\whiteKing.png"));
-    Pawn whitePawne2 = new Pawn(e2.getCoord(), "black", new ImageIcon(path + "\\whitePawn.png"));
-    Castle whiteCastlea1 = new Castle(a1.getCoord(), "black", new ImageIcon(path + "\\whiteCastle.png"));
-    Knight whiteKnightb1 = new Knight(b1.getCoord(), "black", new ImageIcon(path + "\\whiteKnight.png"));
-    Bishop whiteBishopc1 = new Bishop(c1.getCoord(), "black", new ImageIcon(path + "\\whiteBishop.png"));
+    Queen whiteQueen = new Queen(d1.getCoord(), "white", new ImageIcon(path + "\\whiteQueen.png"));
+    King whiteKing = new King(e1.getCoord(), "white", new ImageIcon(path + "\\whiteKing.png"));
+    Pawn whitePawne2 = new Pawn(e2.getCoord(), "white", new ImageIcon(path + "\\whitePawn.png"));
+    Castle whiteCastlea1 = new Castle(a1.getCoord(), "white", new ImageIcon(path + "\\whiteCastle.png"));
+    Knight whiteKnightb1 = new Knight(b1.getCoord(), "white", new ImageIcon(path + "\\whiteKnight.png"));
+    Bishop whiteBishopc1 = new Bishop(c1.getCoord(), "white", new ImageIcon(path + "\\whiteBishop.png"));
         
     // set the images
     e1.setIcon(whiteKing.getImage());
@@ -269,9 +293,22 @@ public static void main(String[] args) {
                             Square startSquare = (Square) piece.getParent();
                             // check if move is legal
                             if(piece.isLegalMove(startSquare.getCoord(), square.getCoord())){
-                                
+                                // if is attacking another piece
                                 if(isAttacking(startSquare, square)){
-                                    square.remove(getPieceByIcon(pieces, (ImageIcon) square.getIcon()));
+                                    System.out.println("in attack block");
+                                    // check if piece is same color
+                                    System.out.println("attacking piece color : " + piece.color);
+                                    System.out.println("attacked piece color : " + getPieceByComponentList(square));
+                                    
+                                    if(piece.color.equals(getPieceByComponentList(square).color)){
+                                        piece.setIsSelected(false);
+                                        startSquare.setIsSelected(false);
+                                        square.setIsSelected(false);
+                                        System.out.println("illegal move: piece same color!!\n\n\n");
+                                        break;
+                                    }
+                                    //square.remove(getPieceByIcon(pieces, (ImageIcon) square.getIcon()));
+                                    //square.remove(getPieceByIcon(pieces, (ImageIcon) square.getIcon()));
                                 }
                                 // move piece obj  
                                 startSquare.remove(piece);
