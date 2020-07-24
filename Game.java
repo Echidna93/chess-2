@@ -3,7 +3,7 @@
  * <p>Represents the mechanics of the game
  *  
  * @author Alexander Jack
- */
+*/
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -12,12 +12,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
+
+import javafx.scene.layout.Border;
+import javafx.scene.layout.GridPane;
 
 public class Game{
     static ArrayList<Square> initBoard() {
@@ -117,6 +121,13 @@ ArrayList<Piece> getPieces(Path path) {
     return pieces;
 }
 
+/**
+ * 
+ * @param square
+ * <p> returns a component if it's of type piece
+ * @return
+ */
+
 static Piece getPieceByComponentList(Square square){
     Component[] components = square.getComponents();
     for(Component component: components){
@@ -136,12 +147,24 @@ public static void main(String[] args) {
     ArrayList<Piece> pieces = new ArrayList<Piece>();
 
     JFrame frame = new JFrame();
-
-    MenuBar menuBar = new MenuBar();
-    frame.setJMenuBar(menuBar);
+    frame.setLayout(new BorderLayout());
 
     Board board = new Board();
-    frame.add(board);
+    SidePanel sidePanel = new SidePanel();
+    JButton test = new JButton();
+    JPanel cl = new JPanel(new CardLayout());
+    
+     
+
+    sidePanel.add(test);
+    //frame.getContentPane().setBackground(Color.BLACK);
+    
+    frame.add(cl);
+    cl.add(board);
+    cl.add(sidePanel);
+
+    MenuBar menuBar = new MenuBar(board, sidePanel);
+    frame.setJMenuBar(menuBar);
     
     // set pieces 
 
@@ -195,6 +218,7 @@ public static void main(String[] args) {
     Knight blackKnightd8 = new Knight(d8.getCoord(), "black", new ImageIcon(path + "\\blackKnight.png"));
     Bishop blackBishoph8 = new Bishop(h8.getCoord(), "black", new ImageIcon(path + "\\blackBishop.png"));
 
+    
 
     // add black piece class to square
     a8.add(blackCastlea8);
@@ -237,6 +261,9 @@ public static void main(String[] args) {
     Knight whiteKnightb1 = new Knight(b1.getCoord(), "white", new ImageIcon(path + "\\whiteKnight.png"));
     Bishop whiteBishopc1 = new Bishop(c1.getCoord(), "white", new ImageIcon(path + "\\whiteBishop.png"));
         
+    
+    test.setIcon(blackBishoph8.getImage());
+
     // set the images
     e1.setIcon(whiteKing.getImage());
     d1.setIcon(whiteQueen.getImage());
@@ -295,35 +322,33 @@ public static void main(String[] args) {
                             if(piece.isLegalMove(startSquare.getCoord(), square.getCoord())){
                                 // if is attacking another piece
                                 if(isAttacking(startSquare, square)){
-                                    System.out.println("in attack block");
-                                    // check if piece is same color
-                                    System.out.println("attacking piece color : " + piece.color);
-                                    System.out.println("attacked piece color : " + getPieceByComponentList(square));
-                                    
-                                    if(piece.color.equals(getPieceByComponentList(square).color)){
+                                    Piece attackedPiece = getPieceByComponentList(square);     
+                                    if(piece.color.equals(attackedPiece.color)){
                                         piece.setIsSelected(false);
                                         startSquare.setIsSelected(false);
                                         square.setIsSelected(false);
                                         System.out.println("illegal move: piece same color!!\n\n\n");
                                         break;
                                     }
-                                    //square.remove(getPieceByIcon(pieces, (ImageIcon) square.getIcon()));
-                                    //square.remove(getPieceByIcon(pieces, (ImageIcon) square.getIcon()));
+                                    JButton button = new JButton();
+                                    sidePanel.add(button);
+                                    button.setIcon(square.getIcon());
+                                    square.remove(attackedPiece);
+                                    square.setIcon(null);
+                                    sidePanel.revalidate();
                                 }
-                                // move piece obj  
+                                // move piece obj
                                 startSquare.remove(piece);
                                 startSquare.setIsOccupied(false);
                                 square.add(piece);
                                 square.setIsOccupied(true);
                                 // increase number of moves
                                 piece.incNumMoves();
-                                
                                 // move ui
                                 square.add(piece);
                                 startSquare.revalidate();
                                 startSquare.setIcon(null);
-                                square.setIcon(piece.getImage());
-                                                                
+                                square.setIcon(piece.getImage());            
                             }else{
                                 piece.setIsSelected(false);
                                 startSquare.setIsSelected(false);

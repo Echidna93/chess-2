@@ -4,15 +4,12 @@
  * @uathor Alexander Jack 
  * 
  */
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.JButton;
-import java.awt.event.ActionEvent;
 
-public abstract class Piece extends JButton implements MouseInputListener {
+public class Piece extends JButton implements MouseInputListener {
 
     public int[] coord = new int[2];
     // numMoves field to hold the number of times a piece has moved
@@ -22,7 +19,9 @@ public abstract class Piece extends JButton implements MouseInputListener {
     public boolean isSelected = false;
     // image will hold png of the piece image
     public ImageIcon image;
-
+    // default constructor
+    public Piece(){
+    }
     public Piece(int[] vector, String color, ImageIcon image, int rank){
         this.coord = vector;
         this.numMoves = 0;

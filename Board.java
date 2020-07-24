@@ -5,11 +5,8 @@
  */
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.MouseInputListener;
 
 // class board is used to simulate chess board
 // class board will be composed of squares
