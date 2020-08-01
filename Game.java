@@ -33,7 +33,7 @@ public class Game{
         for (int i = 8; i >= 1; i--) {
             k = 0;
             for (int j = 1; j < 9; j++) {
-                color = (((j + i) % 2) == 0) ? "GREY" : "WHITE";
+                color = (((j + i) % 2) == 0) ? "BLACK" : "WHITE";
                 board.setBackground(Color.GRAY);
                 board.setVisible(true);
                 final Square square = new Square(Utils.pointsToVector(i, j), color, letters[k] + i);
@@ -145,8 +145,8 @@ public class Game{
 
     static void getPossibleMoves(Piece piece, ArrayList<Square> squares, Square startSquare){
         for(Square square : squares){
-            if(piece.isLegalMove(startSquare.getCoord(), square.getCoord())){
-                System.out.print("legal move: " + square.getId());
+            if(piece.isLegalMove(startSquare.getCoord(), square.getCoord()) && !(isPieceBlocked(squares, startSquare, square))){
+                square.setBackground(Color.GREEN);
             }
         }
     }
@@ -430,6 +430,7 @@ public static void main(String[] args) {
     }
 
     for(Square square : squares){
+        square.setColor();
         board.add(square);
         square.addMouseListener(new MouseInputListener(){
             @Override
@@ -489,7 +490,11 @@ public static void main(String[] args) {
                                 square.setIsSelected(false);
                                 System.out.println("illegal move!!");
                             }
-                        } 
+
+                        }
+                    }
+                    for(Square square:squares){
+                        square.setColor();
                     }
                 }
             }

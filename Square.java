@@ -17,13 +17,12 @@ public class Square extends JButton implements ActionListener{
     Square(int[] vector, String color, String id){
         this.coord = vector;
         this.color = color;
-        setColor(color);
         this.id = id;
         addActionListener(this);
     }
     // setcolor called for initialization of board
-    void setColor(String color){
-        if(color == "GREY"){
+    void setColor(){
+        if(color == "BLACK"){
             setBackground(Color.darkGray);
         }
         else{
