@@ -66,6 +66,12 @@ public class Game{
         }
         return new Square();
     }
+    /**
+     * 
+     * @param startCoord
+     * @param targetCoord
+     * @return
+     */
 
  static int[] getDirectionVector(int[] startCoord, int[] targetCoord){
     int x = Math.abs(startCoord[0] - targetCoord[0]);
@@ -100,7 +106,14 @@ public class Game{
         return ((tup1[0] == tup2[0]) && (tup1[1] == tup2[1]));
     }
 
-    static Boolean isPieceBlocked(Square[] squares, Square startSquare, Square targetSquare){
+    /**
+     * 
+     * @param squares
+     * @param startSquare
+     * @param targetSquare
+     * @return
+     */
+    static Boolean isPieceBlocked(ArrayList <Square> squares, Square startSquare, Square targetSquare){
         int[] currentCoord = startSquare.getCoord();
         int[] targetCoord = targetSquare.getCoord();
         int[] directionVector =  getDirectionVector(currentCoord, targetCoord);
@@ -109,11 +122,33 @@ public class Game{
         while(!(tuplesAreEqual(currentCoord, targetCoord))){
             currentCoord[0] += directionVector[0];
             currentCoord[1] += directionVector[1];
-            if(squares[currentCoord[0]][currentCoord[1]].isOccupied && !(tuplesAreEqual(currentCoord, targetCoord))){
+            Square square = getSquareByCoord(squares, currentCoord);
+            if(square.isOccupied && !(tuplesAreEqual(currentCoord, targetCoord))){
                 return true;
             }
         }
         return false;
+    }
+    /**
+     * 
+     * @param squares
+     * @param coord
+     * @return
+     */
+    static Square getSquareByCoord(ArrayList<Square> squares, int[] coord){
+        for(Square square : squares){
+            if(tuplesAreEqual(square.getCoord(), coord))
+                return square;
+        }
+        return new Square();
+    }
+
+    static void getPossibleMoves(Piece piece, ArrayList<Square> squares, Square startSquare){
+        for(Square square : squares){
+            if(piece.isLegalMove(startSquare.getCoord(), square.getCoord())){
+                System.out.print("legal move: " + square.getId());
+            }
+        }
     }
 
     /**
@@ -346,6 +381,54 @@ public static void main(String[] args) {
     frame.setTitle("Chess");
     frame.setSize(450, 450);
 
+    for(Piece piece: pieces){
+        piece.addMouseListener(new MouseInputListener(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                piece.setIsSelected(true);
+                getPossibleMoves(piece, squares, (Square) piece.getParent());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+            
+        });
+    }
+
     for(Square square : squares){
         board.add(square);
         square.addMouseListener(new MouseInputListener(){
@@ -362,6 +445,7 @@ public static void main(String[] args) {
                         // check if piece is selected
                         if(piece.isSelected){
                             Square startSquare = (Square) piece.getParent();
+                            //getPossibleMoves(piece, squares, startSquare);
                             // check if move is legal
                             if(piece.isLegalMove(startSquare.getCoord(), square.getCoord()) && !isPieceBlocked(squares, startSquare, square)){
                                 // if is attacking another piece
