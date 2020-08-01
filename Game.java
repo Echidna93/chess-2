@@ -67,6 +67,55 @@ public class Game{
         return new Square();
     }
 
+ static int[] getDirectionVector(int[] startCoord, int[] targetCoord){
+    int x = Math.abs(startCoord[0] - targetCoord[0]);
+    int y = Math.abs(startCoord[1] - targetCoord[1]);
+    if(x>=1 && y>=1){
+        return new int[]{1,1};
+    }
+    else if (x>=1 && y==0){
+        return new int[]{1,0};
+    }
+    else if (x>=1 && y<0){
+        return new int[]{1,-1};
+    }
+    else if (x==0 && y>0){
+        return new int[]{0,1};
+    }
+    else if (x<0 && y>0){
+        return new int[]{-1,1};
+    }
+    else if(x<0 && y<0){
+        return new int[]{-1,-1};
+    }
+    else if(x<0 && y==0){
+        return new int[]{-1,0};
+    }
+    else if(x==0 && y<0){
+        return new int[]{0,-1};
+    }
+    return new int[]{0,0};
+}
+    static Boolean tuplesAreEqual(int[] tup1, int[] tup2){
+        return ((tup1[0] == tup2[0]) && (tup1[1] == tup2[1]));
+    }
+
+    static Boolean isPieceBlocked(Square[] squares, Square startSquare, Square targetSquare){
+        int[] currentCoord = startSquare.getCoord();
+        int[] targetCoord = targetSquare.getCoord();
+        int[] directionVector =  getDirectionVector(currentCoord, targetCoord);
+        int x = Math.abs(startSquare.getCoord()[0] - targetSquare.getCoord()[0]);
+        int y = Math.abs(startSquare.getCoord()[1] - targetSquare.getCoord()[1]);
+        while(!(tuplesAreEqual(currentCoord, targetCoord))){
+            currentCoord[0] += directionVector[0];
+            currentCoord[1] += directionVector[1];
+            if(squares[currentCoord[0]][currentCoord[1]].isOccupied && !(tuplesAreEqual(currentCoord, targetCoord))){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 
      * @param source
@@ -224,6 +273,7 @@ public static void main(String[] args) {
     h8.add(blackBishoph8);
     h8.setIsOccupied(true);
     d8.add(blackKnightd8);
+    d8.setIsOccupied(true);
     a2.setIsOccupied(true);
     a1.add(blackQueen);
     a1.setIsOccupied(true);
@@ -313,7 +363,7 @@ public static void main(String[] args) {
                         if(piece.isSelected){
                             Square startSquare = (Square) piece.getParent();
                             // check if move is legal
-                            if(piece.isLegalMove(startSquare.getCoord(), square.getCoord())){
+                            if(piece.isLegalMove(startSquare.getCoord(), square.getCoord()) && !isPieceBlocked(squares, startSquare, square)){
                                 // if is attacking another piece
                                 if(isAttacking(startSquare, square)){
                                     piece.setIsAttacking(true);
