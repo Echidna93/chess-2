@@ -37,6 +37,7 @@ public class Square extends JButton implements ActionListener{
 
     // setIsOcuppied, sets flag if imageicon (piece) is present on square
     void setIsOccupied(boolean isCurrentlyOccupied){
+        System.out.println("here is set is occupied method : " + isCurrentlyOccupied);
         isOccupied = isCurrentlyOccupied;
     }
 

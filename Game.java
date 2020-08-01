@@ -113,16 +113,16 @@ static void setPieces(ArrayList<Square> squares, String path) {
  * 
  * @return ArrayList<Piece>
  */
-
+/*
 ArrayList<Piece> getPieces(Path path) {
     // initialize new array of strings of size 32; one per chess piece
     String[] pieceName = new String[] { "blackPawn", "blackCastle", "blackKnight", "blackBishop", "blackQueen",
             "blackKing", "whitePawn", "whiteCastle", "whiteKnight", "whiteBishop", "WhiteQueen", "whiteKing" };
     return pieces;
 }
+*/
 
 /**
- * 
  * @param square
  * <p> returns a component if it's of type piece
  * @return
@@ -154,8 +154,6 @@ public static void main(String[] args) {
     JButton test = new JButton();
     JPanel cl = new JPanel(new CardLayout());
     
-     
-
     sidePanel.add(test);
     //frame.getContentPane().setBackground(Color.BLACK);
     
@@ -218,8 +216,6 @@ public static void main(String[] args) {
     Knight blackKnightd8 = new Knight(d8.getCoord(), "black", new ImageIcon(path + "\\blackKnight.png"));
     Bishop blackBishoph8 = new Bishop(h8.getCoord(), "black", new ImageIcon(path + "\\blackBishop.png"));
 
-    
-
     // add black piece class to square
     a8.add(blackCastlea8);
     a8.setIsOccupied(true);    
@@ -231,12 +227,11 @@ public static void main(String[] args) {
     a2.setIsOccupied(true);
     a1.add(blackQueen);
     a1.setIsOccupied(true);
-    f7.add(blackPawna7);
-    f7.setIsOccupied(true);
-    squares.get(1).add(blackKing);
-        
+    h7.add(blackKing);
+    h7.setIsOccupied(true);
+
     // set the images
-    squares.get(1).setIcon(blackKing.getImage());
+    h7.setIcon(blackKing.getImage());
     a1.setIcon(blackQueen.getImage());
     d8.setIcon(blackKnightd8.getImage());
     a7.setIcon(blackPawna7.getImage());
@@ -260,8 +255,7 @@ public static void main(String[] args) {
     Castle whiteCastlea1 = new Castle(a1.getCoord(), "white", new ImageIcon(path + "\\whiteCastle.png"));
     Knight whiteKnightb1 = new Knight(b1.getCoord(), "white", new ImageIcon(path + "\\whiteKnight.png"));
     Bishop whiteBishopc1 = new Bishop(c1.getCoord(), "white", new ImageIcon(path + "\\whiteBishop.png"));
-        
-    
+         
     test.setIcon(blackBishoph8.getImage());
 
     // set the images
@@ -322,33 +316,39 @@ public static void main(String[] args) {
                             if(piece.isLegalMove(startSquare.getCoord(), square.getCoord())){
                                 // if is attacking another piece
                                 if(isAttacking(startSquare, square)){
+                                    piece.setIsAttacking(true);
                                     Piece attackedPiece = getPieceByComponentList(square);     
                                     if(piece.color.equals(attackedPiece.color)){
                                         piece.setIsSelected(false);
                                         startSquare.setIsSelected(false);
                                         square.setIsSelected(false);
+                                        piece.setIsAttacking(false);
                                         System.out.println("illegal move: piece same color!!\n\n\n");
                                         break;
                                     }
                                     JButton button = new JButton();
                                     sidePanel.add(button);
                                     button.setIcon(square.getIcon());
-                                    square.remove(attackedPiece);
                                     square.setIcon(null);
+                                    square.remove(attackedPiece);
                                     sidePanel.revalidate();
+                                    System.out.println("is pawn attacking : " + piece.isAttacking);
+                                    piece.setIsAttacking(false);
                                 }
                                 // move piece obj
                                 startSquare.remove(piece);
                                 startSquare.setIsOccupied(false);
+                                startSquare.setIcon(null);
                                 square.add(piece);
+                                square.setIcon(piece.getImage());
                                 square.setIsOccupied(true);
                                 // increase number of moves
                                 piece.incNumMoves();
                                 // move ui
                                 square.add(piece);
                                 startSquare.revalidate();
-                                startSquare.setIcon(null);
-                                square.setIcon(piece.getImage());            
+
+                                
                             }else{
                                 piece.setIsSelected(false);
                                 startSquare.setIsSelected(false);

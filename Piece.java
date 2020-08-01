@@ -17,6 +17,7 @@ public class Piece extends JButton implements MouseInputListener {
     public String color;
     // isSelected decides whether or not user has selected given piece
     public boolean isSelected = false;
+    public boolean isAttacking = false;
     // image will hold png of the piece image
     public ImageIcon image;
     // default constructor
@@ -110,6 +111,14 @@ public class Piece extends JButton implements MouseInputListener {
     void incNumMoves(){
         numMoves+=1;
     }
+
+    boolean getIsAttacking(){
+        return this.isAttacking;
+    }
+    void setIsAttacking(boolean isAttackingSquare){
+        this.isAttacking = isAttackingSquare;
+    }
+
 
     /*
     * returns imageicon representation of the piece
